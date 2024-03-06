@@ -1,8 +1,9 @@
-const { app, BrowserWindow, Menu } = require('electron');
+const { app, ipcMain, BrowserWindow, Menu } = require('electron');
 const path = require('path');
-const { dialog } = require('electron');
-const { remote } = require('electron');
-const { Notification } = require('electron');
+const { dialog } = require('electron')
+const fs = require('fs')
+const decompress = require("decompress");
+const https = require('https');
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) {
@@ -17,17 +18,50 @@ const createWindow = () => {
 
   // Create the browser window.
   const mainWindow = new BrowserWindow({
-    icon: path.join(__dirname, iconPath),
     width: 800,
     height: 600,
     webPreferences: {
+      nodeIntegration: true,
       preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
     },
   });
 
+  ipcMain.on('read-file', (event) => {
+    try {
+      const data = fs.readFileSync('/Users/juleslagadic/Dev/askara-files/test/test.txt', 'utf8');
+      decompress("/Users/juleslagadic/Dev/askara-files/test/test.txt.zip", "/Users/juleslagadic/Dev/askara-files/test/extract")
+      .then((files) => {
+        dialog.showMessageBox({message:'extracted!'});
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+      dialog.showMessageBox({message:data});
+    } catch (err) {
+      console.error(err);
+    }
+  })
+
+  ipcMain.on('write-file', (event) => {
+    const file = fs.createWriteStream("/Users/juleslagadic/Dev/askara-files/test/test.pdf");
+    const request = https.get("https://storage.googleapis.com/schlouk-map/uploads/menu/le-xx-638f25f17b9720.64699334.pdf", function(response) {
+      response.pipe(file);
+
+      // after download completed close filestream
+      file.on("finish", () => {
+        file.close();
+        dialog.showMessageBox({message:'write ok!'});
+      });
+    });
+
+  });
+
   // and load the index.html of the app.
   mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
-  mainWindow.setMenu(null);
+  const template = [];
+  const menu = Menu.buildFromTemplate(template)
+  Menu.setApplicationMenu(menu)
 
   // Open the DevTools.
   //mainWindow.webContents.openDevTools();

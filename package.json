@@ -45,10 +45,16 @@
     "@popperjs/core": "^2.11.8",
     "add": "^2.0.6",
     "bootstrap": "^5.3.3",
+    "decompress": "^4.2.1",
     "electron-squirrel-startup": "^1.0.0",
     "jquery": "^3.7.1"
   },
   "config": {
     "forge": "./forge.config.js"
+  },
+  "browser": {
+    "fs": false,
+    "os": false,
+    "path": false
   }
 }
