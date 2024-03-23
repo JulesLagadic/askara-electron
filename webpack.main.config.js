@@ -8,4 +8,9 @@ module.exports = {
   module: {
     rules: require('./webpack.rules'),
   },
+  resolve: {
+    fallback: {
+      path: require.resolve("path-browserify"),
+    },
+  },
 };

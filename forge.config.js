@@ -33,6 +33,7 @@ module.exports = {
       name: '@electron-forge/plugin-webpack',
       config: {
         mainConfig: './webpack.main.config.js',
+        devContentSecurityPolicy: "connect-src 'self' * 'unsafe-eval'",
         renderer: {
           config: './webpack.renderer.config.js',
           entryPoints: [
@@ -44,6 +45,14 @@ module.exports = {
                 js: './src/preload.js',
               },
             },
+            {
+              html: './src/dashboard.html',
+              js: './src/renderer.js',
+              name: 'main_dashboard',
+              preload: {
+                js: './src/preload.js',
+              },
+            }
           ],
         },
       },

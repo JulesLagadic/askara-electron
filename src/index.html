@@ -14,28 +14,29 @@
   </nav>
   <main>
     <div class="mx-auto mb-5" style="max-width:600px;">
+      <p>Connecteur logiciel</p>
       <h1 class="text-center my-4">Connexion</h1>
       <div class="card mx-3 shadow-sm">
         <div class="card-body">
-          <form action="#" method="post">
+          <form id="loginForm">
             <div class="mb-3">
               <label for="email" class="form-label">Email</label>
-              <input id="email" name="_username" type="email" autocomplete="email" required class="form-control">
+              <input id="email" name="username" type="email" autocomplete="email" required class="form-control">
             </div>
             <div class="mb-3">
               <div class="d-flex justify-content-between">
                 <label for="password" class="form-label">Mot de passe</label>
                 <a href="#">Mot de passe oublié ?</a>
               </div>
-              <input id="password" name="_password" type="password" autocomplete="current-password" required class="form-control">
+              <input id="password" name="password" type="password" autocomplete="current-password" required class="form-control">
             </div>
             <button type="submit" class="btn btn-primary w-100 btn-lg">Me connecter</button>
           </form>
         </div>
       </div>
       <p class="text-center mt-3">Pas encore de compte ? <a href="#" id="myButton">S'inscrire</a></p>
-      <!--<p><a id="readButton">Read</a></p>
-      <p><a id="writeButton">Write</a></p>-->
+      <p><a id="readButton">Read</a></p>
+      <p><a id="writeButton">Write</a></p>
     </div>
   </main>
   </body>
